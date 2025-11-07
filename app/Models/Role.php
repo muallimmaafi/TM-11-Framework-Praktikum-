@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    use HasFactory;
+    //use HasFactory;
 
     protected $table = 'role';
     protected $primaryKey = 'idrole';
@@ -15,8 +15,13 @@ class Role extends Model
 
     protected $fillable = ['nama_role'];
 
-    public function users()
+    public function user()
     {
-        return $this->hasMany(\App\Models\User::class, 'idrole', 'idrole');
+        return $this->belongsToMany(\App\Models\User::class, 'role_user', 'idrole', 'iduser')->using(RoleUser::class);
     }
+
+    //public function roleUser(){
+    //    return $this->hasMany(RoleUser::class, 'idrole', 'idrole');
+    //}
+    
 }

@@ -33,11 +33,22 @@
 
             <section class="list">
                 <h3>Daftar Kategori Klinis</h3>
+                <div class="mb-3">
+                    <form action="{{ route('admin.kategori-klinis.create') }}" method="GET" style="display: inline;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah Kategori Klinis
+                        </button>
+                    </form>
+                </div>
+
+                <br>
+                
                 <table>
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Nama Kategori Klinis</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,6 +56,18 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $kat->nama_kategori_klinis }}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-warning" onclick="window.location='#'">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yaking Ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $kat->idkategori_klinis }}').submit();}">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                                <form id="delete-form-{{ $kat->idkategori_klinis }}" action="#" method="POST" style="display: none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

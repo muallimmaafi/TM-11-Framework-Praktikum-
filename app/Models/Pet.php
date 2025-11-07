@@ -30,4 +30,7 @@ class Pet extends Model
     {
         return $this->belongsTo(Pemilik::class, 'idpemilik', 'idpemilik');
     }
+
+    //mematikan created_at dan updated_at
+    public $timestamps = false;
 }

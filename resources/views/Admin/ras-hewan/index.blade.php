@@ -33,12 +33,23 @@
 
             <section class="list">
                 <h3>Daftar Ras Hewan</h3>
+                <div class="mb-3">
+                    <form action="{{ route('admin.ras-hewan.create') }}" method="GET" style="display: inline;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah Ras Hewan
+                        </button>
+                    </form>
+                </div>
+
+                <br>
+                
                 <table>
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Nama Ras Hewan</th>
                             <th>Jenis Hewan</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,6 +58,18 @@
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $ras->nama_ras }}</td>
                             <td>{{ $ras->jenisHewan->nama_jenis_hewan ?? '-' }}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-warning" onclick="window.location='#'">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yaking Ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $ras->idras_hewan }}').submit();}">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                                <form id="delete-form-{{ $ras->idras_hewan }}" action="#" method="POST" style="display: none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

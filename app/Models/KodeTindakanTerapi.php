@@ -21,4 +21,7 @@ class KodeTindakanTerapi extends Model
     {
         return $this->belongsTo(KategoriKlinis::class, 'idkategori_klinis', 'idkategori_klinis');
     }
+
+    //mematikan created_at dan updated_at
+    public $timestamps = false;
 }

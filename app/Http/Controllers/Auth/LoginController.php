@@ -32,7 +32,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -63,10 +63,8 @@ class LoginController extends Controller
                 ->withInput();
         }
 
-        $user = User::with(['roleUser' => function($query) {
-                $query->where('status', 1);
-        }, 'roleUser.role'])
-            ->where ('email', $request->input('email'))
+        $user = User::with(['roleUser.role'])
+            ->where('email', $request->email)
             ->first();
 
         if (!$user) {
@@ -75,19 +73,13 @@ class LoginController extends Controller
                 ->withInput();
         }
 
-        // Cek password
         if (!Hash::check($request->password, $user->password)) {
             return redirect()->back()
                 ->withErrors(['password' => 'Password salah.'])
                 ->withInput();
         }
 
-        $namaRole = Role::where('idrole', $user->roleUser[0]->idrole ?? null)->first();
-
-        // Login user ke session
-        Auth::login($user);
-
-        // Simpan session user
+        $namaRole = Role::where('idrole', $user->role[0]->idrole ?? null)->first();
         Auth::login($user);
 
         $request->session()->put([
@@ -96,24 +88,30 @@ class LoginController extends Controller
             'user_email' => $user->email,
             'user_role' => $user->roleUser[0]->idrole ?? 'user',
             'user_role_name' => $namaRole->nama_role ?? 'User',
-            'user_status' => $user->roleUser[0]->status ?? 'active'
+            'user_status' => $roleAktif->status ?? 'active',
         ]);
 
         $userRole = $user->roleUser[0]->idrole ?? null;
+        
+        //dd($userRole);
+
+        //dd(Auth::getSession());
 
         switch ($userRole) {
-            case '1':
+            case 1:
                 return redirect()->route('admin.dashboard')->with('success', 'Login berhasil sebagai Administrator');
-            case '2':
+            case 2:
                 return redirect()->route('dokter.dashboard')->with('success', 'Login berhasil sebagai Dokter');
-            case '3':
-                return redirect()->route('perawat.dashboard')->with('success', 'Login berhasil sebagai Perawat');  
-            case '4':
+            case 3:
+                return redirect()->route('perawat.dashboard')->with('success', 'Login berhasil sebagai Perawat');
+            case 4:
                 return redirect()->route('resepsionis.dashboard')->with('success', 'Login berhasil sebagai Resepsionis');
             default:
                 return redirect()->route('pemilik.dashboard')->with('success', 'Login berhasil sebagai Pemilik');
         }
+        
     }
+
 
     public function logout(Request $request)
     {

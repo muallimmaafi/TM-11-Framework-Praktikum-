@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Resepsionis</title>
+    <title>Dashboard Pemilik</title>
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
@@ -20,7 +20,7 @@
 
         <main>
             <header>
-                <h2>Halo, Resepsionis</h2>
+                <h2>Halo, Pemilik</h2>
                 <p>Selamat Datang di Dashboard Rumah Sakit Hewan Pendidikan Universitas Airlangga</p>
             </header>
         </main>

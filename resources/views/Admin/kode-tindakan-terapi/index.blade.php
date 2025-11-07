@@ -33,6 +33,16 @@
 
             <section class="list">
                 <h3>Kode Tindakan Terapi</h3>
+                <div class="mb-3">
+                    <form action="{{ route('admin.kode-tindakan-terapi.create') }}" method="GET" style="display: inline;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah Kode Tindakan Terapi
+                        </button>
+                    </form>
+                </div>
+
+                <br>
+                
                 <table>
                     <thead>
                         <tr>
@@ -41,6 +51,7 @@
                             <th>Deskripsi Tindakan Terapi</th>
                             <th>idKategori</th>
                             <th>idKategori Klinis</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,6 +62,18 @@
                             <td>{{ $t->deskripsi_tindakan_terapi }}</td>
                             <td>{{ $t->kategori->idkategori ?? '-' }}</td>
                             <td>{{ $t->kategoriKlinis->idkategori_klinis ?? '-' }}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-warning" onclick="window.location='#'">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yaking Ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $t->idkode_tindakan_terapi }}').submit();}">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                                <form id="delete-form-{{ $t->idkode_tindakan_terapi }}" action="#" method="POST" style="display: none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class RoleUser extends Pivot
 {
-    use HasFactory;
+    //use HasFactory;
 
     protected $table = 'role_user';
     protected $primaryKey = 'idrole_user';

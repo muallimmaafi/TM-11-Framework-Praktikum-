@@ -64,4 +64,5 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'idrole', 'idrole');
     }
 
+    public $timestamps = false;
 }

@@ -33,6 +33,16 @@
 
             <section class="list">
                 <h3>Daftar Pemilik</h3>
+                <div class="mb-3">
+                    <form action="{{ route('admin.pemilik.create') }}" method="GET" style="display: inline;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah Pemilik
+                        </button>
+                    </form>
+                </div>
+
+                <br>
+                
                 <table>
                     <thead>
                         <tr>
@@ -40,6 +50,7 @@
                             <th>Nama Pemilik</th>
                             <th>No WA</th>
                             <th>Alamat</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,6 +60,18 @@
                             <td>{{ $item->user->nama }}</td>
                             <td>{{ $$item->no_wa }}</td>
                             <td>{{ $item->alamat }}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-warning" onclick="window.location='#'">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yaking Ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $item->idpemilik }}').submit();}">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                                <form id="delete-form-{{ $item->idpemilik }}" action="#" method="POST" style="display: none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

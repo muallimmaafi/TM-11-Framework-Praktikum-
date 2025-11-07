@@ -33,12 +33,23 @@
 
             <section class="list">
                 <h3>Daftar Role</h3>
+                <div class="mb-3">
+                    <form action="{{ route('admin.role.create') }}" method="GET" style="display: inline;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah Role
+                        </button>
+                    </form>
+                </div>
+
+                <br>
+                
                 <table>
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>ID Role</th>
                             <th>Nama Role</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,6 +58,18 @@
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $r->idrole }}</td>
                             <td>{{ $r->nama_role }}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-warning" onclick="window.location='#'">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yaking Ingin menghapus data ini?')) { document.getElementById('delete-form-{{ $r->idrole }}').submit();}">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                                <form id="delete-form-{{ $r->idrole }}" action="#" method="POST" style="display: none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

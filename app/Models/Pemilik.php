@@ -24,4 +24,7 @@ class Pemilik extends Model
     {
         return $this->hasMany(RoleUser::class, 'iduser', 'iduser');
     }
+
+    //mematikan created_at dan updated_at
+    public $timestamps = false;
 }

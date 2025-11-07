@@ -3,23 +3,15 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class isDokter
+class IsDokter
 {
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
-
-        $userRole = session('user_role');
-
-        if ($userRole == 2) {
+        if (Auth::check() && session('user_role') == 2) {
             return $next($request);
         }
-
-        return redirect()->back()->with('error', 'Akses ditolak. Anda tidak memiliki izin.');
+        return redirect('/')->withErrors('Akses ditolak.');
     }
 }
